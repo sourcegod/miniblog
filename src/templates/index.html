@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="post" action="/"> <!-- action="{{ url_for('sorted') }}"> -->
+    
+    <p>
+    <label for="sortedby">Sorted By: {{ cursel }}</label>
+        <!-- <p>Voici form: {{ request.form }}</p> -->
+        <br>
+        <select name="sort_select">
+            {% if col_names %}
+                {% for name in col_names %}
+                    {% if name == cursel %}  
+                        <option value="{{ name }}" selected>{{ name }}</option>
+                    {% else %}
+                        <option value="{{ name }}">{{ name }}</option>
+                    {% endif %}
+
+                {% endfor %}
+              
+            {% else %}
+                <option value="{{ cursel }}">{{ "id" }}</option>
+            {% endif %}
+
+        </select>
+    </p>
+
+    <p>
+        <label for="orderby">Order By: {{ order_name }}</label>
+        <br>
+        <select name="order_select">
+            {% if curorder == "ASC" %}  
+            <option value="ASC" selected>Ascendant</option>
+               <option value="DESC">Descendant</option>
+            {% else %}
+               <option value="ASC">Ascendant</option>
+               <option value="DESC" selected>Descendant</option>
+            {% endif %}
+        </select>
+
+        <!--
+        <br>
+        Voici form: {{ request.form }}
+        <br>
+        et voici cursel: {{ cursel }}, curorder: {{ curorder }}
+        -->
+
+    </p>
+
+
+    <!---
+    <p>
+    <label for="check_order">Ascendant: {{ curorder }}</label>
+        <br>
+        {% if curorder == "DESC" %}
+            <input id="check_order" name="check_order" type="checkbox" value=""> 
+        {% else %}
+        <input checked id="check_order" name="check_order" type="checkbox" value="{{ curorder }}">
+        {% endif %}
+        <br>
+        Voici form: {{ request.form }}
+        <br>
+        et voici cursel: {{ cursel }}, curorder: {{ curorder }}
+    </p>
+    -->
+
+
+    <p>
+        <button type="submit">Submit</button>
+    </p>
+    
+    </form>
+    <br>
+
+    <h1>{% block title %} Posts List {% endblock %}</h1>
+  
+    {% for post in posts %}
+        <div class='post'>
+          <p>{{ post['id'] }}. Posted by: {{ post['author'] }}, at: {{ post['created'] }}</p>
+            <h2>Title: {{ post['title'] }}</h2>
+            <p>Message: {{ post['content'] }}</p>
+            <a href="{{ url_for('edit', id=post['id']) }}">Edit Post</a>
+            <br><br>
+        </div>
+    {% endfor %}
+{% endblock %}
+
