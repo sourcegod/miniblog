@@ -2,10 +2,10 @@
 
 {% block content %}
 
-<form method="post">
+<form method="post" action="/search">
     <p>  
         <input type="text" name="search_box" placeholder="Search..."
-        value="Search..."></input>
+                                             value="{{ request.form['search_box'] }}"></input>
         <br>
         <button type="submit">[Search]</button>
     </p>
@@ -54,6 +54,7 @@
         <br>
         et voici cursel: {{ cursel }}, curorder: {{ curorder }}
         -->
+
 
     </p>
 

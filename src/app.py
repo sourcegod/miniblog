@@ -142,6 +142,31 @@ def sorted():
 
 #----------------------------------------
 
+@app.route('/search', methods=['POST'])
+def search_results():
+    results = []
+    if request.method == 'POST':
+        search = request.form['search_box']
+        flash(f"voici search: {search}")
+
+    
+    """
+    search_string = search.data['search']
+
+    if search.data['search'] == '':
+        qry = db_session.query(album)
+        results = qry.all()
+    """
+
+    if not results:
+        flash('no results found!')
+        return redirect('/')
+    else:
+        # display results
+        return render_template('results.html', results=results)
+
+#----------------------------------------
+
 
 @app.route("/test", methods=['GET', 'POST'])
 def test():
